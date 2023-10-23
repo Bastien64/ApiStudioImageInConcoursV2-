@@ -13,7 +13,7 @@ import csv
 
 
 app = Flask(__name__)
-
+port = int(os.environ.get('PORT', 5000))
 # Configuration de la base de données sur CONCOURS PHOTO
 CORS(app, resources={r"/*": {"origins": "*"}})
 app.config['MYSQL_HOST'] = 'bastien.sitetest.best'
