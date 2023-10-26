@@ -192,6 +192,4 @@ def download_admins():
     output.headers["Content-type"] = "text/csv"
     return output
 if __name__ == '__main__':
-    # Utilisez os.environ.get pour obtenir le port depuis la variable d'environnement
-    port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
