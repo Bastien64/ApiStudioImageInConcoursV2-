@@ -191,6 +191,39 @@ def download_admins():
     output.headers["Content-Disposition"] = "attachment; filename=admins.csv"
     output.headers["Content-type"] = "text/csv"
     return output
+@app.route('/date', methods=['GET'])
+def get_date():
+    cur = mysql.connection.cursor()
+    cur.execute('''SELECT * FROM dateconcours''')
+    result = cur.fetchall()
+    dates = []
+    for date in result:
+        date_data = {}
+        date_data['id'] = date[0]
+        date_data['Datedebut'] = date[1]
+        date_data['Datedefin'] = date[2]
+        dates.append(date_data)
+    return jsonify(dates)
+
+@app.route('/date', methods=['DELETE'])
+def delete_all_dates():
+    cur = mysql.connection.cursor()
+    cur.execute('DELETE FROM dateconcours')
+    mysql.connection.commit()
+    return jsonify({'message': 'Toutes les dates ont été supprimées avec succès'})
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+@app.route('/date', methods=['POST'])
+def add_date():
+    Datedebut = request.json['Datedebut']
+    Datedefin = request.json['Datedefin']
+    cur = mysql.connection.cursor()
+    cur.execute('''INSERT INTO dateconcours (Datedebut, Datedefin) VALUES(%s, %s)''',
+                (Datedebut, Datedefin))
+    mysql.connection.commit()
+    return jsonify({'message': 'date added successfully'})
 
 if __name__ == '__main__':
     # Utilisez os.environ.get pour obtenir le port depuis la variable d'environnement
