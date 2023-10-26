@@ -11,7 +11,7 @@ from PIL import Image
 import csv
 import os  
 
-
+WSGIRequestHandler.protocol_version = "HTTP/1.1"
 app = Flask(__name__)
 port = int(os.environ.get('PORT', 5000))
 # Configuration de la base de données sur CONCOURS PHOTO
