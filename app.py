@@ -110,18 +110,18 @@ def add_photo():
     img = Image.open(file)
     
     # Redimensionner l'image en largeur maximale de 100 pixels et hauteur automatique
-    max_width = 100
+    max_width = 500
     width_percent = (max_width / float(img.size[0]))
     new_height = int((float(img.size[1]) * float(width_percent)))
     img = img.resize((max_width, new_height), Image.LANCZOS)
     
     # Compression JPEG avec une qualité de 85 (vous pouvez ajuster la qualité selon vos besoins)
-    jpeg_quality = 85
+    jpeg_quality = 100
     img_byte_array = BytesIO()
     img.save(img_byte_array, format='JPEG', quality=jpeg_quality, optimize=True)
     
     # Réduire la taille du fichier pour ne pas dépasser 200 Ko
-    while img_byte_array.tell() > 200 * 1024:  # 200 Ko en octets
+    while img_byte_array.tell() > 400 * 1024:  # 200 Ko en octets
         jpeg_quality -= 5
         img_byte_array = BytesIO()
         img.save(img_byte_array, format='JPEG', quality=jpeg_quality, optimize=True)
